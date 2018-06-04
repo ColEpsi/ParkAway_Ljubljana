@@ -4,7 +4,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/parking_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/ilirija" />
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="bottom">
 
         <TextView
             android:id="@+id/distance_closest_text_view"
@@ -41,14 +41,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:background="#000000"
                 android:id="@+id/name_closest_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:paddingTop="20dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#ffffff"
+                android:textColor="#4689C8"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 tools:text="Ilirija parking"/>
