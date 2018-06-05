@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
 
+    public static ArrayList<String[]> data;
+
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -90,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
         }
         process.execute();
 
+        // Na tem mestu mamo upolrabnikovo lokacijo in podatke o vseh parkiriščih.
+
+
         osvezi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,15 +109,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(parkingInfoIntent);
             }
         });
-        TextView razdaljaDoNajblizjegaTextView = (TextView) findViewById(R.id.distance_closest_text_view);
-        //razdaljaDoNajblizjegaTextView.setText();
-        TextView najblizjiTextView = (TextView) findViewById(R.id.name_closest_text_view);
-        //najblizjiTextView.setText();
-        TextView steviloMestNajblizjegaTextView = (TextView) findViewById(R.id.nr_of_places_closest_text_view);
-        //steviloMestNajblizjegaTextView.setText();
 
         // ustvari seznam najbližjih parkirišč TODO naj bo dinamično, TODO naj bo razvrščeno od najbližjega do najbolj oddaljenega
         ArrayList<Parking> parkings = new ArrayList<Parking>();
+
+        //for (int i = 0; i < data.size(); i++) {
+            //parkings.add(new Parking(data.get(i)[2], data.get(i)[0], data.get(i)[5], data.get(i)[6], data.get(i)[3]));
+        //}
+
         parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
         parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
         parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
@@ -120,11 +124,6 @@ public class MainActivity extends AppCompatActivity {
         parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
         parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
         parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
 
         ParkingAdapter adapter = new ParkingAdapter(this, parkings);
         ListView listView = (ListView) findViewById(R.id.list);
@@ -162,5 +161,22 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates("gps", 5000, 5, locationListener);
+    }
+
+    private double distanceTo(Parking parking) {
+        double currentLat = device_lat;
+        double currentLng = device_lng;
+        double parkingLat = parking.getLatitude();
+        double parkingLng = parking.getLongitude();
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(parkingLat - currentLat);
+        double lonDistance = Math.toRadians(parkingLng - currentLng);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(currentLat)) * Math.cos(Math.toRadians(parkingLat))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+        return distance;
     }
 }
