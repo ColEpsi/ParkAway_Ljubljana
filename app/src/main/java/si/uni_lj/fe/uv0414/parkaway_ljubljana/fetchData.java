@@ -68,7 +68,7 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
         Log.i(TAG, dataList.toString());
         MainActivity.closest_name.setText(this.dataList.get(1)[0]);
        // MainActivity.closest_image.setImageURI(this.dataList.get(0)[0]);
-       // MainActivity.closest_distance.setText(this.dataList.get(0)[0]);
+       // MainActivity.closest_distance.setText((String) MainActivity.device_lat);
         MainActivity.closest_num_slots.setText(this.dataList.get(1)[3] + " mest");
     }
 }
