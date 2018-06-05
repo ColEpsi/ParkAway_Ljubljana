@@ -20,13 +20,13 @@ import java.util.List;
 
 public class fetchData extends AsyncTask<Void, Void, Void> {
     String data;
-    ArrayList<String[]> dataList = new ArrayList<String[]>();
+    ArrayList<Parking> parkings = new ArrayList<Parking>();
     private static final String TAG = "SPOROCILO";
     JSONArray JA;
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            URL url = new URL("https://api.myjson.com/bins/1ejytu");
+            URL url = new URL("https://api.myjson.com/bins/isare");
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
@@ -40,17 +40,10 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
             JA = new JSONArray(data);
 
             for (int i = 0; i < JA.length(); i++){
-                String [] dataParsed = new String[7];
                 JSONObject JO = (JSONObject) JA.get(i);
-                dataParsed[0] = (String) JO.get("name");
-                dataParsed[1] = (String) JO.get("description");
-                dataParsed[2] = (String) JO.get("image_path");
-                dataParsed[3] = (String) JO.get("num_slots");
-                dataParsed[4] = (String) JO.get("price");
-                dataParsed[5] = (String) JO.get("lat");
-                dataParsed[6] = (String) JO.get("lng");
 
-                dataList.add(dataParsed);
+                parkings.add(new Parking((int)JO.get("image_path"), (String)JO.get("name"), (double)JO.get("lat"),(double) JO.get("lng"), (int)JO.get("num_slots")));
+
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -65,11 +58,7 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Log.i(TAG, dataList.toString());
-        //MainActivity.closest_name.setText(this.dataList.get(1)[0]);
-       // MainActivity.closest_image.setImageURI(this.dataList.get(0)[0]);
-       // MainActivity.closest_distance.setText((String) MainActivity.device_lat);
-        //MainActivity.closest_num_slots.setText(this.dataList.get(1)[3] + " mest");
-        MainActivity.data = dataList;
+
+        MainActivity.parkings = parkings;
     }
 }

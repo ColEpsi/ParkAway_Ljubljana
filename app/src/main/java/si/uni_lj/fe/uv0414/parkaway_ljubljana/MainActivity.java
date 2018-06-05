@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    public static ArrayList<String[]> data;
+    public static ArrayList<Parking> parkings;
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -109,21 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(parkingInfoIntent);
             }
         });
-
-        // ustvari seznam najbližjih parkirišč TODO naj bo dinamično, TODO naj bo razvrščeno od najbližjega do najbolj oddaljenega
-        ArrayList<Parking> parkings = new ArrayList<Parking>();
-
-        //for (int i = 0; i < data.size(); i++) {
-            //parkings.add(new Parking(data.get(i)[2], data.get(i)[0], data.get(i)[5], data.get(i)[6], data.get(i)[3]));
-        //}
-
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
 
         ParkingAdapter adapter = new ParkingAdapter(this, parkings);
         ListView listView = (ListView) findViewById(R.id.list);
