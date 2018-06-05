@@ -17,6 +17,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -31,11 +32,13 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "SPOROCILO";
     Button osvezi;
     public static TextView closest_name;
     public static ImageView closest_image;
     public static TextView closest_distance;
     public static TextView closest_num_slots;
+    public static ListView listView;
     fetchData process = new fetchData();
 
     public static float device_lat;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         closest_image = (ImageView) findViewById(R.id.closest_parking_image_view);
         closest_distance = (TextView) findViewById(R.id.distance_closest_text_view);
         closest_num_slots = (TextView) findViewById(R.id.nr_of_places_closest_text_view);
+        listView = (ListView) findViewById(R.id.list);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -90,9 +94,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             configureButton();
         }
-        process.execute();
 
-        // Na tem mestu mamo upolrabnikovo lokacijo in podatke o vseh parkiriščih.
+        process.execute();
 
 
         osvezi.setOnClickListener(new View.OnClickListener() {
@@ -110,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ParkingAdapter adapter = new ParkingAdapter(this, parkings);
-        ListView listView = (ListView) findViewById(R.id.list);
-        listView.setAdapter(adapter);
 
         Button map = (Button) findViewById(R.id.zemljevid_button);
         map.setOnClickListener(new View.OnClickListener() {
@@ -148,20 +148,5 @@ public class MainActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates("gps", 5000, 5, locationListener);
     }
 
-    private double distanceTo(Parking parking) {
-        double currentLat = device_lat;
-        double currentLng = device_lng;
-        double parkingLat = parking.getLatitude();
-        double parkingLng = parking.getLongitude();
-        final int R = 6371; // Radius of the earth
 
-        double latDistance = Math.toRadians(parkingLat - currentLat);
-        double lonDistance = Math.toRadians(parkingLng - currentLng);
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(currentLat)) * Math.cos(Math.toRadians(parkingLat))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c * 1000; // convert to meters
-        return distance;
-    }
 }

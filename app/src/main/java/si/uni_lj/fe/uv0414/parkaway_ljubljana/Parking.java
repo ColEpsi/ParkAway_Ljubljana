@@ -5,21 +5,23 @@ package si.uni_lj.fe.uv0414.parkaway_ljubljana;
  */
 
 public class Parking {
-    private int mPhoto;
+    private String mPhoto;
     private String mParkingName;
     private double mLatitude;
     private double mLongitude;
     private int mNumberOfPlaces;
+    private String mDescription;
 
-    public Parking(int photo, String parkingName, double latitude, double longitude, int numberOfPlaces) {
+    public Parking(String photo, String parkingName, double latitude, double longitude, int numberOfPlaces, String description) {
        mPhoto = photo;
        mParkingName = parkingName;
        mLatitude = latitude;
        mLongitude = longitude;
        mNumberOfPlaces = numberOfPlaces;
+       mDescription = description;
     }
 
-    public int getPhoto() {
+    public String getPhoto() {
        return mPhoto;
     }
 
@@ -40,6 +42,11 @@ public class Parking {
     public int getNumberOfPlaces() {
        return mNumberOfPlaces;
     }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
 
     // Potrebni setterji? Zaenkrat mislim da ne, da se bo itak določlo ob klicu konstruktorja lastnosti posameznega parkplaca.
 }

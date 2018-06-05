@@ -22,6 +22,9 @@
         </activity>
         <activity android:name=".ParkingActivity" />
         <activity android:name=".MapsActivity"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAfKhRIT-MlnkO-8-aiHtIDayD1rg387lg"/>
     </application>
 
 </manifest>
