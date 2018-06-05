@@ -37,11 +37,12 @@
         android:textAlignment="center"
         tools:text="Parkirišče se nahaja na križišču Tržaške in Šestove ulice. Na voljo je 200 parkirnih mest po ceni 0,40€ na uro."/>
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:background="#00000000" />
+    <Button
+        android:id="@+id/directions_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Navodila za pot"
+        tools:text="Navodila za pot"/>
 
 </LinearLayout>
