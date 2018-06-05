@@ -1,6 +1,7 @@
 package si.uni_lj.fe.uv0414.parkaway_ljubljana;
 
 import android.content.Intent;
+import android.location.LocationProvider;
 import android.media.Image;
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -28,9 +29,15 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 public class MainActivity extends AppCompatActivity {
+    private FusedLocationProviderClient client;
 
     private static final String TAG = "SPOROCILO";
     Button osvezi;
@@ -41,11 +48,9 @@ public class MainActivity extends AppCompatActivity {
     public static ListView listView;
     fetchData process = new fetchData();
 
-    public static float device_lat;
-    public static float device_lng;
+    public static double device_lat;
+    public static double device_lng;
 
-    private LocationManager locationManager;
-    private LocationListener locationListener;
 
     public static ArrayList<Parking> parkings;
 
@@ -63,37 +68,24 @@ public class MainActivity extends AppCompatActivity {
         closest_num_slots = (TextView) findViewById(R.id.nr_of_places_closest_text_view);
         listView = (ListView) findViewById(R.id.list);
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                device_lat = (float) location.getLatitude();
-                device_lng = (float) location.getLongitude();
+        requestPermission();
 
-            }
+        client = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 10);
             return;
-        } else {
-            configureButton();
         }
+        client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null){
+                    device_lat = location.getLatitude();
+                    device_lng = location.getLongitude();
+                }
+            }
+        });
+
+
 
         process.execute();
 
@@ -124,28 +116,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 10:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    configureButton();
-                return;
-        }
-    }
-
-    private void configureButton() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager.requestLocationUpdates("gps", 5000, 5, locationListener);
+    private void requestPermission(){
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 
 
