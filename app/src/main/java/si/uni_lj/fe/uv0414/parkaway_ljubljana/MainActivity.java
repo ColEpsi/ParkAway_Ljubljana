@@ -106,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent parkingInfoIntent = new Intent(MainActivity.this, ParkingActivity.class);
+                // TODO s tem lahko preneseš Parking objekt (najbližji parking) v ParkingActivity.java, tako da ni potrebno tam potem še enkrat vseh data klicat itd.
+                //parkingInfoIntent.putExtra("PARKING", parking);
                 startActivity(parkingInfoIntent);
             }
         });
