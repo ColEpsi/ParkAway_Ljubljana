@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ParkingActivity">
+
+    <ImageView
+        android:id="@+id/parking_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ilirija"/>
+
+    <TextView
+        android:id="@+id/parking_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ilirija parking"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:gravity="center"
+        android:textColor="#000000"
+        tools:text="Ilirija parking"/>
+
+    <TextView
+        android:id="@+id/parking_description_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Parkirišče se nahaja na križišču Tržaške in Šestove ulice. Na voljo je 200 parkirnih mest po ceni 0,40€ na uro."
+        android:textColor="#6b42f4"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        tools:text="Parkirišče se nahaja na križišču Tržaške in Šestove ulice. Na voljo je 200 parkirnih mest po ceni 0,40€ na uro."/>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="#00000000" />
+
+</LinearLayout>
