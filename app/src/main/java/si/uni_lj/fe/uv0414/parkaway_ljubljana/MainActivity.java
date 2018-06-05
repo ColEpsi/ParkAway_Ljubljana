@@ -117,13 +117,13 @@ public class MainActivity extends AppCompatActivity {
             //parkings.add(new Parking(data.get(i)[2], data.get(i)[0], data.get(i)[5], data.get(i)[6], data.get(i)[3]));
         //}
 
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100));
-        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10));
+        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10, "opis"));
+        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100, "opis"));
+        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10, "opis"));
+        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100, "opis"));
+        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10, "opis"));
+        parkings.add(new Parking(R.drawable.ilirija, "Parking Tivoli", 123.3, 123.4, 100, "opis"));
+        parkings.add(new Parking(R.drawable.ilirija, "Parking Mirje", 13.4, 13.4, 10, "opis"));
 
         ParkingAdapter adapter = new ParkingAdapter(this, parkings);
         ListView listView = (ListView) findViewById(R.id.list);
