@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
                 Intent parkingInfoIntent = new Intent(MainActivity.this, ParkingActivity.class);
                 // TODO s tem lahko preneseš Parking objekt (najbližji parking) v ParkingActivity.java, tako da ni potrebno tam potem še enkrat vseh data klicat itd.
                 // da bi lahko prenašal object med activityji, ga moreš implementirat kot Parcelable.
-                parkingInfoIntent.putExtra("PARKING", (Parcelable) parkings.get(0));
+                parkingInfoIntent.putExtra("PARKING", (Parcelable) parkings.get(distance_ranking.get(0)[1]));
                 startActivity(parkingInfoIntent);
             }
         });

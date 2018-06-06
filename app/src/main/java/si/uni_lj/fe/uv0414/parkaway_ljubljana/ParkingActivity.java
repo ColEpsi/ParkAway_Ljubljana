@@ -2,6 +2,8 @@ package si.uni_lj.fe.uv0414.parkaway_ljubljana;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -34,24 +36,27 @@ public class ParkingActivity extends AppCompatActivity {
         Parking parking = (Parking) i.getParcelableExtra("PARKING");
         Log.i("TST", parking.getDescription());
 
-        // Nastavi sliko TODO predvidoma je nekje definirana spremenljivka tipa Parking, od katere potem dobiš podatek o sliki z parking.getPhoto() in ga vstaviš
-        // TODO v setImageResource(...)
+        // Nastavi sliko parkinga ki ga pridobiš z intentom
+        // Potrebno je še convertat iz Stringa ki ga dobimo iz JSONa v int id
+        Resources res = getResources();
+        String mDrawableName = parking.getPhoto();
+        Log.i("PhotoName", mDrawableName);
+        int resID = res.getIdentifier(mDrawableName, "drawable", getPackageName());
         slikaParkingaImageView = (ImageView) findViewById(R.id.parking_image_view);
-        //slikaParkingaImageView.setImageResource();
+        slikaParkingaImageView.setImageResource(resID);
 
         // TODO spremenljivka parking tipa Parking, parking.getParkingName() vstaviš v setText(...)
         imeParkiriscaTextView = (TextView) findViewById(R.id.parking_name_text_view);
-        //imeParkiriscaTextView.setText();
+        imeParkiriscaTextView.setText(parking.getParkingName());
 
         // parking.getDescription() vstaviš v opisParkiriscaTextView.setText(...)
         opisParkiriscaTextView = (TextView) findViewById(R.id.parking_description_text_view);
-        //opisParkiriscaTextView.setText();
+        opisParkiriscaTextView.setText(parking.getDescription());
 
         // Implicit intent za navodilo za pot do gledanega parkirišča
         navodilaZaPotButton = (Button) findViewById(R.id.directions_button);
-        // ime parkirišča TODO odkomentiraj tole spodi in zbriši "parking mirje" ko boš nastavu text imenu parkirisca
-        // ime = imeParkiriscaTextView.getText().toString();
-        ime = "Parking Mirje";
+        // ime parkirišča
+        ime = imeParkiriscaTextView.getText().toString();
         navodilaZaPotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
