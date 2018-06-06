@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
             @Override
             public void onClick(View v) {
                 Intent parkingInfoIntent = new Intent(MainActivity.this, ParkingActivity.class);
-                // TODO s tem lahko preneseš Parking objekt (najbližji parking) v ParkingActivity.java, tako da ni potrebno tam potem še enkrat vseh data klicat itd.
+                // prenašanja Parking objekta (najbližji parking) v ParkingActivity.java
                 // da bi lahko prenašal object med activityji, ga moreš implementirat kot Parcelable.
                 parkingInfoIntent.putExtra("PARKING", (Parcelable) parkings.get(distance_ranking.get(0)[1]));
                 startActivity(parkingInfoIntent);
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, ParkingActivity.class);
-                // TODO s tem lahko preneseš Parking objekt (najbližji parking) v ParkingActivity.java, tako da ni potrebno tam potem še enkrat vseh data klicat itd.
+                // prenašanje Parking objekta (najbližji parking) v ParkingActivity.java
                 // da bi lahko prenašal object med activityji, ga moreš implementirat kot Parcelable.
                 intent.putExtra("PARKING", (Parcelable) parkings.get(position));
                 startActivity(intent);

@@ -58,11 +58,9 @@ public class ParkingActivity extends AppCompatActivity implements OnMapReadyCall
         slikaParkingaImageView = (ImageView) findViewById(R.id.parking_image_view);
         slikaParkingaImageView.setImageResource(resID);
 
-        // TODO spremenljivka parking tipa Parking, parking.getParkingName() vstaviš v setText(...)
         imeParkiriscaTextView = (TextView) findViewById(R.id.parking_name_text_view);
         imeParkiriscaTextView.setText(parking.getParkingName());
 
-        // parking.getDescription() vstaviš v opisParkiriscaTextView.setText(...)
         opisParkiriscaTextView = (TextView) findViewById(R.id.parking_description_text_view);
         opisParkiriscaTextView.setText(parking.getDescription());
 
