@@ -11,7 +11,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Image;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -26,6 +29,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -36,7 +42,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DownloadCallback {
     private FusedLocationProviderClient client;
 
     private static final String TAG = "SPOROCILO";
@@ -50,9 +56,11 @@ public class MainActivity extends AppCompatActivity {
 
     public static double device_lat;
     public static double device_lng;
+    public static String jsonUrl = "https://api.myjson.com/bins/o2ndu";
 
 
-    public static ArrayList<Parking> parkings;
+    public static ArrayList<Parking> parkings = new ArrayList<Parking>();
+    ArrayList<int[]> distance_ranking = new ArrayList<int[]>();
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -86,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-        process.execute();
+        new DownloadJsonTask(this).execute(jsonUrl);
+        //process.execute();
 
 
 //        osvezi.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent parkingInfoIntent = new Intent(MainActivity.this, ParkingActivity.class);
                 // TODO s tem lahko preneseš Parking objekt (najbližji parking) v ParkingActivity.java, tako da ni potrebno tam potem še enkrat vseh data klicat itd.
+                //parkingInfoIntent.putExtra("PARKING", parkings.get(distance_ranking.get(0)[1]));
                 //parkingInfoIntent.putExtra("PARKING", parking);
                 startActivity(parkingInfoIntent);
             }
@@ -123,4 +132,71 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void updateFromDownload(Object result) throws JSONException {
+        String json = (String) result;
+        Log.i(TAG, json);
+
+        //Parsamo String v objekte parking
+        JSONArray JA = new JSONArray(json);
+
+        for (int i = 0; i < JA.length(); i++){
+            JSONObject JO = (JSONObject) JA.get(i);
+
+            parkings.add(new Parking((String)JO.get("image_path"), (String)JO.get("name"), (double)JO.get("lat"),(double) JO.get("lng"), (int)JO.get("num_slots"), (String)JO.get("description") ));
+
+        }
+
+        //razvrstimo objekte po razdalji
+        int temp_min_distance = -1;
+        for (int i = 0; i < parkings.size(); i++){
+            int temp_min = 10000000;
+            int temp_index = -1;
+            for (int j = 0; j < parkings.size(); j++){
+                int distance = (int) distanceTo(parkings.get(j));
+                if (distance < temp_min && temp_min_distance < distance){
+                    temp_min = distance;
+                    temp_index = j;
+                }
+            }
+            distance_ranking.add(new int[]{temp_min, temp_index});
+            temp_min_distance = temp_min;
+        }
+        //ocitno moramo podatke nastavit tukaj notri in ne v oncreate ker jih takrat se nima....
+        closest_distance.setText(String.valueOf(distance_ranking.get(0)[0]) + "m");
+        closest_name.setText(parkings.get(distance_ranking.get(0)[1]).getParkingName());
+        closest_num_slots.setText(String.valueOf(parkings.get(distance_ranking.get(0)[1]).getNumberOfPlaces())+ " mest");
+        closest_image.setImageURI(Uri.parse("android.resource://si.uni_lj.fe.uv0414.parkaway_ljubljana/drawable/"+parkings.get(distance_ranking.get(0)[1]).getPhoto()));
+    }
+
+    @Override
+    public NetworkInfo getActiveNetworkInfo() {
+        return null;
+    }
+
+    @Override
+    public void onProgressUpdate(int progressCode, int percentComplete) {
+
+    }
+
+    @Override
+    public void finishDownloading() {
+
+    }
+    private double distanceTo(Parking parking) {
+        double currentLat = device_lat;
+        double currentLng = device_lng;
+        double parkingLat = parking.getLatitude();
+        double parkingLng = parking.getLongitude();
+        final int R = 6371; // Radius of the earth
+        Log.i(TAG, device_lat + " " + device_lng);
+        double latDistance = Math.toRadians(parkingLat - currentLat);
+        double lonDistance = Math.toRadians(parkingLng - currentLng);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(currentLat)) * Math.cos(Math.toRadians(parkingLat))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+        return distance;
+    }
 }
