@@ -1,5 +1,6 @@
 package si.uni_lj.fe.uv0414.parkaway_ljubljana;
 
+import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -19,8 +20,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GeoDataClient mGeoDataClient;
@@ -36,6 +41,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int DEFAULT_ZOOM = 15;
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    ArrayList<Parking> parkings = new ArrayList<Parking>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +60,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // TO JE TREBA ZAMENJAT Z DEJANSKIM ARRAY-jem!!!!!
+        parkings.add(new Parking("dont need", "Ilirija parking", 46.045216, 14.487252, 10, "dont need"));
+        parkings.add(new Parking("dont need", "Parking Tivoli", 46.047360, 14.490720, 100, "dont need"));
+        parkings.add(new Parking("dont need", "Parking Mirje", 46.046842, 14.491619, 10, "dont need"));
+        parkings.add(new Parking("dont need", "Parking Tivoli", 46.048559, 14.490830, 100, "dont need"));
+        parkings.add(new Parking("dont need", "Parking Mirje", 46.044024, 14.487858, 10, "dont need"));
+        parkings.add(new Parking("dont need", "Parking Tivoli", 46.041121, 14.490300, 100, "dont need"));
+        parkings.add(new Parking("dont need", "Parking Mirje", 46.045257, 14.492689, 10, "dont need"));
+
     }
+
     private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
@@ -101,6 +118,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getDeviceLocation();
     }
 
+
    private void updateLocationUI() {
         if (mMap == null) {
             return;
@@ -109,9 +127,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if (mLocationPermissionGranted) {
                 mMap.setMyLocationEnabled(true);
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                mMap.getUiSettings().isZoomGesturesEnabled();
+                mMap.getUiSettings().isZoomControlsEnabled();
+
             } else {
-                mMap.setMyLocationEnabled(false);
-                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                for (int i = 0; i < parkings.size(); i++){
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(parkings.get(i).getLatitude(), parkings.get(i).getLongitude()))
+                            .anchor(0.5f, 0.5f)
+                            .title(parkings.get(i).getParkingName())
+                    );
+                }
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                mMap.getUiSettings().isZoomGesturesEnabled();
+                mMap.getUiSettings().isZoomControlsEnabled();
                 mLastKnownLocation = null;
                 getLocationPermission();
             }
