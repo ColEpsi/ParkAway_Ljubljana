@@ -106,17 +106,17 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
 //            }
 //        });
 
-        // parkings
-        parkings.add(new Parking("R.drawable.ilirija", "Ilirija parking", 1.23, 199.0, 20, "Opis Ilirije parkinga. Cena: 4.2€/h."));
-        parkings.add(new Parking("R.drawable.langusova", "Parkirišče na Langusovi", 2.4, 100, 10, "Zelo luštno parkirišče. Cena: poceni."));
-        parkings.add(new Parking("R.drawable.mencingerjeva", "Mencingerjevo parkirišče", 4, -1.23, 1, "To parkirišče pripada Mencingerju. Stay away to not get him mad."));
+        // dummy parkings Luka
+        // parkings.add(new Parking("R.drawable.ilirija", "Ilirija parking", 1.23, 199.0, 20, "Opis Ilirije parkinga. Cena: 4.2€/h."));
+        // parkings.add(new Parking("R.drawable.langusova", "Parkirišče na Langusovi", 2.4, 100, 10, "Zelo luštno parkirišče. Cena: poceni."));
+        // parkings.add(new Parking("R.drawable.mencingerjeva", "Mencingerjevo parkirišče", 4, -1.23, 1, "To parkirišče pripada Mencingerju. Stay away to not get him mad."));
 
         closest_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent parkingInfoIntent = new Intent(MainActivity.this, ParkingActivity.class);
                 // TODO s tem lahko preneseš Parking objekt (najbližji parking) v ParkingActivity.java, tako da ni potrebno tam potem še enkrat vseh data klicat itd.
-                // TODO da bi lahko prenašal object med activityji, ga moreš implementirat kot Parcelable.
+                // da bi lahko prenašal object med activityji, ga moreš implementirat kot Parcelable.
                 parkingInfoIntent.putExtra("PARKING", (Parcelable) parkings.get(0));
                 startActivity(parkingInfoIntent);
             }
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
             @Override
             public void onClick(View v) {
                 Intent showMapIntent = new Intent(MainActivity.this, MapsActivity.class);
+                showMapIntent.putExtra("ArrayListOfParkings", parkings);
                 startActivity(showMapIntent);
             }
         });

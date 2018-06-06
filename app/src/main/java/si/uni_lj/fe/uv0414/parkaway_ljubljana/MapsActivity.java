@@ -1,6 +1,7 @@
 package si.uni_lj.fe.uv0414.parkaway_ljubljana;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -62,14 +63,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         // TO JE TREBA ZAMENJAT Z DEJANSKIM ARRAY-jem!!!!!
-        parkings.add(new Parking("dont need", "Ilirija parking", 46.045216, 14.487252, 10, "dont need"));
+        /*parkings.add(new Parking("dont need", "Ilirija parking", 46.045216, 14.487252, 10, "dont need"));
         parkings.add(new Parking("dont need", "Parking Tivoli", 46.047360, 14.490720, 100, "dont need"));
         parkings.add(new Parking("dont need", "Parking Mirje", 46.046842, 14.491619, 10, "dont need"));
         parkings.add(new Parking("dont need", "Parking Tivoli", 46.048559, 14.490830, 100, "dont need"));
         parkings.add(new Parking("dont need", "Parking Mirje", 46.044024, 14.487858, 10, "dont need"));
         parkings.add(new Parking("dont need", "Parking Tivoli", 46.041121, 14.490300, 100, "dont need"));
         parkings.add(new Parking("dont need", "Parking Mirje", 46.045257, 14.492689, 10, "dont need"));
-
+        */
+        Intent g = getIntent();
+        parkings = g.getParcelableArrayListExtra("ArrayListOfParkings");
     }
 
     private void getLocationPermission() {
