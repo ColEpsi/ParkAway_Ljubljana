@@ -18,22 +18,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class ParkingActivity extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class ParkingActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     ImageView slikaParkingaImageView;
     TextView imeParkiriscaTextView;
     TextView opisParkiriscaTextView;
     Button navodilaZaPotButton;
     String ime;
+    private GoogleMap mMap;
+    private Parking parking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking);
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.parking_activity_map);
+        mapFragment.getMapAsync(this);
+
         // Pridobivanje podatkov iz putExtras v MainActivityju ob klicanju Intenta
         Intent i = getIntent();
-        Parking parking = (Parking) i.getParcelableExtra("PARKING");
+        parking = (Parking) i.getParcelableExtra("PARKING");
         Log.i("TST", parking.getDescription());
 
         // Nastavi sliko parkinga ki ga pridobiš z intentom
@@ -75,5 +88,19 @@ public class ParkingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.getUiSettings().isZoomGesturesEnabled();
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(parking.getLatitude(), parking.getLongitude()))
+                .anchor(0.5f, 0.5f)
+                .title(parking.getParkingName())
+        );
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                new LatLng(parking.getLatitude(),
+                        parking.getLongitude()),15));
     }
 }
