@@ -1,5 +1,6 @@
 package si.uni_lj.fe.uv0414.parkaway_ljubljana;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -25,7 +26,7 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            URL url = new URL("https://api.myjson.com/bins/isare");
+            URL url = new URL("https://api.myjson.com/bins/o2ndu");
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
@@ -83,6 +84,7 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
         MainActivity.closest_distance.setText(String.valueOf(distance_ranking.get(0)[0]) + "m");
         MainActivity.closest_name.setText(parkings.get(distance_ranking.get(0)[1]).getParkingName());
         MainActivity.closest_num_slots.setText(String.valueOf(parkings.get(distance_ranking.get(0)[1]).getNumberOfPlaces())+ " mest");
+        MainActivity.closest_image.setImageURI(Uri.parse("android.resource://si.uni_lj.fe.uv0414.parkaway_ljubljana/drawable/"+parkings.get(distance_ranking.get(0)[1]).getPhoto()));
         MainActivity.parkings = parkings;
 
     }

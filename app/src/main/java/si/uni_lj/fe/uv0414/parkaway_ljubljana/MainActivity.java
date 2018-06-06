@@ -90,12 +90,12 @@ public class MainActivity extends AppCompatActivity {
         process.execute();
 
 
-        osvezi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                process.execute();
-            }
-        });
+//        osvezi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                process.execute();
+//            }
+//        });
 
         closest_image.setOnClickListener(new View.OnClickListener() {
             @Override
