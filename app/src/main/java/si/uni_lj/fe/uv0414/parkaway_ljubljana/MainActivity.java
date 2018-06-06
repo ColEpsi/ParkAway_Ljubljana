@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -174,6 +175,24 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
         closest_name.setText(parkings.get(distance_ranking.get(0)[1]).getParkingName());
         closest_num_slots.setText(String.valueOf(parkings.get(distance_ranking.get(0)[1]).getNumberOfPlaces())+ " mest");
         closest_image.setImageURI(Uri.parse("android.resource://si.uni_lj.fe.uv0414.parkaway_ljubljana/drawable/"+parkings.get(distance_ranking.get(0)[1]).getPhoto()));
+
+        // TODO adapter naj ne sprejme "parkings", ampak razvrščen seznam parkingov.
+        // vrjetno najboljše da se nardi nov ArrayList<Parking> element, v katerega po velikosti s pomočjo distance_ranking.get... vstaviš parkinge.
+        ParkingAdapter adapter = new ParkingAdapter(this, parkings);
+        ListView listView = (ListView) findViewById(R.id.list);
+        listView.setAdapter(adapter);
+
+        // on click metoda za listview
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, ParkingActivity.class);
+                // TODO s tem lahko preneseš Parking objekt (najbližji parking) v ParkingActivity.java, tako da ni potrebno tam potem še enkrat vseh data klicat itd.
+                // da bi lahko prenašal object med activityji, ga moreš implementirat kot Parcelable.
+                intent.putExtra("PARKING", (Parcelable) parkings.get(position));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
