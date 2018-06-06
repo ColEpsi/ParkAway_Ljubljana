@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="#FF0033">
+    android:background="#EF2323">
 
     <TextView
         android:id="@+id/distance_text_view"
@@ -13,7 +13,7 @@
         android:layout_margin="16dp"
         android:padding="4dp"
         android:textSize="20sp"
-        android:background="@drawable/circular_background"
+        android:background="@drawable/circular_background_list"
         tools:text="500m"/>
 
     <TextView
@@ -22,12 +22,12 @@
         android:layout_height="match_parent"
         android:layout_margin="16dp"
         android:textSize="20sp"
+        android:textColor="#ffffff"
         tools:text="Postojnska ulica"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
         android:src="@drawable/right"/>
 
 </LinearLayout>
