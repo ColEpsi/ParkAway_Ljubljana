@@ -6,6 +6,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -27,6 +28,11 @@ public class ParkingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking);
+
+        // Pridobivanje podatkov iz putExtras v MainActivityju ob klicanju Intenta
+        Intent i = getIntent();
+        Parking parking = (Parking) i.getParcelableExtra("PARKING");
+        Log.i("TST", parking.getDescription());
 
         // Nastavi sliko TODO predvidoma je nekje definirana spremenljivka tipa Parking, od katere potem dobiš podatek o sliki z parking.getPhoto() in ga vstaviš
         // TODO v setImageResource(...)

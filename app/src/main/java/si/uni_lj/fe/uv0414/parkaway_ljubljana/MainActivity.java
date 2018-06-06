@@ -12,6 +12,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Image;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public static double device_lng;
 
 
-    public static ArrayList<Parking> parkings;
+    public static ArrayList<Parking> parkings = new ArrayList<Parking>();
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -97,12 +99,18 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        // parkings
+        parkings.add(new Parking("R.drawable.ilirija", "Ilirija parking", 1.23, 199.0, 20, "Opis Ilirije parkinga. Cena: 4.2€/h."));
+        parkings.add(new Parking("R.drawable.langusova", "Parkirišče na Langusovi", 2.4, 100, 10, "Zelo luštno parkirišče. Cena: poceni."));
+        parkings.add(new Parking("R.drawable.mencingerjeva", "Mencingerjevo parkirišče", 4, -1.23, 1, "To parkirišče pripada Mencingerju. Stay away to not get him mad."));
+
         closest_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent parkingInfoIntent = new Intent(MainActivity.this, ParkingActivity.class);
                 // TODO s tem lahko preneseš Parking objekt (najbližji parking) v ParkingActivity.java, tako da ni potrebno tam potem še enkrat vseh data klicat itd.
-                //parkingInfoIntent.putExtra("PARKING", parking);
+                // TODO da bi lahko prenašal object med activityji, ga moreš implementirat kot Parcelable.
+                parkingInfoIntent.putExtra("PARKING", (Parcelable) parkings.get(0));
                 startActivity(parkingInfoIntent);
             }
         });
