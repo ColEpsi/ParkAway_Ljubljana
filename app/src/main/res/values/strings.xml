@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ParkAway_Ljubljana</string>
+    <string name="app_name">ParkAway Ljubljana</string>
     <string name="GPSAlertDialogTitle">Potreba po lokaciji</string>
     <string name="GPSAlertDialogMessage">Za delovanje potrebujemo vaše podatke o lokaciji!</string>
     <string name="action_settings">Prosimo nastavite nastavitve</string>

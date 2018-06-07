@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="65dp"
     android:background="#EF2323">
 
     <TextView
         android:id="@+id/distance_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:padding="4dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="14dp"
+        android:padding="6dp"
         android:textSize="20sp"
         android:background="@drawable/circular_background_list"
         tools:text="500m"/>
@@ -20,14 +22,22 @@
         android:id="@+id/others_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:textSize="20sp"
+        android:layout_toRightOf="@id/distance_text_view"
+        android:layout_centerVertical="true"
+        android:layout_margin="18dp"
+        android:textSize="22sp"
         android:textColor="#ffffff"
+        android:textAlignment="center"
         tools:text="Postojnska ulica"/>
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="34dp"
         android:layout_height="match_parent"
-        android:src="@drawable/right"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="18dp"
+        android:src="@drawable/right"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="18dp" />
 
-</LinearLayout>
+</RelativeLayout>
