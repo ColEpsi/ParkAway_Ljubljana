@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        osvezi = (Button) findViewById(R.id.osvezi_button);
+        //osvezi = (Button) findViewById(R.id.osvezi_button);
         closest_name = (TextView) findViewById(R.id.name_closest_text_view);
         closest_image = (ImageView) findViewById(R.id.closest_parking_image_view);
         closest_distance = (TextView) findViewById(R.id.distance_closest_text_view);
