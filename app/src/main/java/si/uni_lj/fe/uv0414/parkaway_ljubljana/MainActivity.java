@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
         for (int i = 0; i < JA.length(); i++){
             JSONObject JO = (JSONObject) JA.get(i);
 
-            parkings.add(new Parking((String)JO.get("image_path"), (String)JO.get("name"), (double)JO.get("lat"),(double) JO.get("lng"), (int)JO.get("num_slots"), (String)JO.get("description") ));
+            parkings.add(new Parking((String)JO.get("image_path"), (String)JO.get("name"), (double)JO.get("lat"),(double) JO.get("lng"), (int)JO.get("num_slots"), (String)JO.get("description"), 0 ));
 
         }
 

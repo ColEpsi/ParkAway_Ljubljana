@@ -70,6 +70,7 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
             temp_min_distance = temp_min;
         }
 
+        // set distances to listview
 
 
         return null;

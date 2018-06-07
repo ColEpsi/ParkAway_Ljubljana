@@ -14,7 +14,9 @@ public class Parking implements Parcelable {
     private double mLongitude;
     private int mNumberOfPlaces;
     private String mDescription;
+    private int mDistance;
 
+    // konstruktor za parking, ki je najbližji
     public Parking(String photo, String parkingName, double latitude, double longitude, int numberOfPlaces, String description) {
        mPhoto = photo;
        mParkingName = parkingName;
@@ -22,6 +24,17 @@ public class Parking implements Parcelable {
        mLongitude = longitude;
        mNumberOfPlaces = numberOfPlaces;
        mDescription = description;
+    }
+
+    // konstruktor za seznam parkingov, ki jim podamo še razdaljo od trenutnega najbližjega parkinga
+    public Parking(String photo, String parkingName, double latitude, double longitude, int numberOfPlaces, String description, int distance) {
+        mPhoto = photo;
+        mParkingName = parkingName;
+        mLatitude = latitude;
+        mLongitude = longitude;
+        mNumberOfPlaces = numberOfPlaces;
+        mDescription = description;
+        mDistance = distance;
     }
 
     public String getPhoto() {
@@ -50,6 +63,7 @@ public class Parking implements Parcelable {
         return mDescription;
     }
 
+    public int getDistance() { return mDistance; }
     @Override
     public int describeContents() {
         return 0;
@@ -63,6 +77,7 @@ public class Parking implements Parcelable {
         out.writeDouble(mLongitude);
         out.writeInt(mNumberOfPlaces);
         out.writeString(mDescription);
+        // vrjetno ni potrebno dodat še mDistance, ker le-tega ne podajamo med intenti
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -87,4 +102,7 @@ public class Parking implements Parcelable {
     }
 
     // Potrebni setterji? Zaenkrat mislim da ne, da se bo itak določlo ob klicu konstruktorja lastnosti posameznega parkplaca.
+    public void setDistance (int distance) {
+        mDistance = distance;
+    }
 }
