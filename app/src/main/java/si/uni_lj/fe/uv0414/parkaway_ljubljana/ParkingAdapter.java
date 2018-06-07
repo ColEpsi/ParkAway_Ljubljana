@@ -33,7 +33,9 @@ public class ParkingAdapter extends ArrayAdapter<Parking> {
         TextView distanceTextView = (TextView) listItemView.findViewById(R.id.distance_text_view);
         // Get the distance to the parking in the list
         // Treba še tam napisat funkcijo ki zračuna razdaljo med trenutno lokacijo in lokacijo tega parkinga
-        distanceTextView.setText(currentParking.getDistance());
+        if (currentParking != null) {
+            distanceTextView.setText(Integer.toString(currentParking.getDistance()));
+        }
 
         TextView nameTextView = (TextView) listItemView.findViewById(R.id.others_text_view);
         nameTextView.setText(currentParking.getParkingName());

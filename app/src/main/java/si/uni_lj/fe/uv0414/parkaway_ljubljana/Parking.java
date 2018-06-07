@@ -17,14 +17,14 @@ public class Parking implements Parcelable {
     private int mDistance;
 
     // konstruktor za parking, ki je najbližji
-    public Parking(String photo, String parkingName, double latitude, double longitude, int numberOfPlaces, String description) {
+    /*public Parking(String photo, String parkingName, double latitude, double longitude, int numberOfPlaces, String description) {
        mPhoto = photo;
        mParkingName = parkingName;
        mLatitude = latitude;
        mLongitude = longitude;
        mNumberOfPlaces = numberOfPlaces;
        mDescription = description;
-    }
+    }*/
 
     // konstruktor za seznam parkingov, ki jim podamo še razdaljo od trenutnega najbližjega parkinga
     public Parking(String photo, String parkingName, double latitude, double longitude, int numberOfPlaces, String description, int distance) {
@@ -64,6 +64,13 @@ public class Parking implements Parcelable {
     }
 
     public int getDistance() { return mDistance; }
+
+    // Potrebni setterji? Zaenkrat mislim da ne, da se bo itak določlo ob klicu konstruktorja lastnosti posameznega parkplaca.
+    public void setDistance (int distance) {
+        mDistance = distance;
+    }
+
+    // Parcelable del
     @Override
     public int describeContents() {
         return 0;
@@ -77,6 +84,7 @@ public class Parking implements Parcelable {
         out.writeDouble(mLongitude);
         out.writeInt(mNumberOfPlaces);
         out.writeString(mDescription);
+        out.writeInt(mDistance);
         // vrjetno ni potrebno dodat še mDistance, ker le-tega ne podajamo med intenti
     }
 
@@ -99,10 +107,6 @@ public class Parking implements Parcelable {
         mLongitude = in.readDouble();
         mNumberOfPlaces = in.readInt();
         mDescription = in.readString();
-    }
-
-    // Potrebni setterji? Zaenkrat mislim da ne, da se bo itak določlo ob klicu konstruktorja lastnosti posameznega parkplaca.
-    public void setDistance (int distance) {
-        mDistance = distance;
+        mDistance = in.readInt();
     }
 }

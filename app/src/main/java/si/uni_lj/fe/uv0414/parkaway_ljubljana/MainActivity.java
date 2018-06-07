@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
     public static TextView closest_distance;
     public static TextView closest_num_slots;
     public static ListView listView;
-    fetchData process = new fetchData();
 
     public static double device_lat;
     public static double device_lng;
@@ -185,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
         closest_num_slots.setText(String.valueOf(parkings.get(distance_ranking.get(0)[1]).getNumberOfPlaces())+ " mest");
         closest_image.setImageURI(Uri.parse("android.resource://si.uni_lj.fe.uv0414.parkaway_ljubljana/drawable/"+parkings.get(distance_ranking.get(0)[1]).getPhoto()));
 
-        // TODO adapter naj ne sprejme "parkings", ampak razvrščen seznam parkingov.
+        // adapter ne sprejme "parkings", ampak razvrščen seznam parkingov.
         // vrjetno najboljše da se nardi nov ArrayList<Parking> element, v katerega po velikosti s pomočjo distance_ranking.get... vstaviš parkinge.
         ParkingAdapter adapter = new ParkingAdapter(this, parkings_sorted);
         ListView listView = (ListView) findViewById(R.id.list);
