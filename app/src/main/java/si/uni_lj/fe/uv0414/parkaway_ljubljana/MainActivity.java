@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
         for (int i = 1; i < distance_ranking.size(); i++){
             Log.i(TAG, String.valueOf(distance_ranking.get(i)[0]));
             parkings_sorted.add(parkings.get(distance_ranking.get(i)[1]));
+            parkings_sorted.get(parkings_sorted.size() - 1).setDistance(distance_ranking.get(i)[0]);
         }
 
         //ocitno moramo podatke nastavit tukaj notri in ne v oncreate ker jih takrat se nima....
