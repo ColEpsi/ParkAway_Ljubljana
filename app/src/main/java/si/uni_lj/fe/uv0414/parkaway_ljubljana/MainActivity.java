@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
 
 
     public static ArrayList<Parking> parkings = new ArrayList<Parking>();
+    public static ArrayList<Parking> parkings_sorted = new ArrayList<Parking>();
     ArrayList<int[]> distance_ranking = new ArrayList<int[]>();
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -170,6 +171,13 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
             distance_ranking.add(new int[]{temp_min, temp_index});
             temp_min_distance = temp_min;
         }
+
+        //naredimo ArrayList sortiranih parkingov
+        for (int i = 1; i < distance_ranking.size(); i++){
+            Log.i(TAG, String.valueOf(distance_ranking.get(i)[0]));
+            parkings_sorted.add(parkings.get(distance_ranking.get(i)[1]));
+        }
+
         //ocitno moramo podatke nastavit tukaj notri in ne v oncreate ker jih takrat se nima....
         closest_distance.setText(String.valueOf(distance_ranking.get(0)[0]) + "m");
         closest_name.setText(parkings.get(distance_ranking.get(0)[1]).getParkingName());
@@ -178,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
 
         // TODO adapter naj ne sprejme "parkings", ampak razvrščen seznam parkingov.
         // vrjetno najboljše da se nardi nov ArrayList<Parking> element, v katerega po velikosti s pomočjo distance_ranking.get... vstaviš parkinge.
-        ParkingAdapter adapter = new ParkingAdapter(this, parkings);
+        ParkingAdapter adapter = new ParkingAdapter(this, parkings_sorted);
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
 
