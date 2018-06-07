@@ -34,7 +34,13 @@ public class ParkingAdapter extends ArrayAdapter<Parking> {
         // Get the distance to the parking in the list
         // Treba še tam napisat funkcijo ki zračuna razdaljo med trenutno lokacijo in lokacijo tega parkinga
         if (currentParking != null) {
-            distanceTextView.setText(Integer.toString(currentParking.getDistance()));
+            if (currentParking.getDistance() > 999) {
+                int converted = currentParking.getDistance();
+                converted /= 1000;
+                distanceTextView.setText(Integer.toString(converted) + "km");
+            } else {
+                distanceTextView.setText(Integer.toString(currentParking.getDistance()) + "m");
+            }
         }
 
         TextView nameTextView = (TextView) listItemView.findViewById(R.id.others_text_view);

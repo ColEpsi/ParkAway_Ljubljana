@@ -179,7 +179,14 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback 
         }
 
         //ocitno moramo podatke nastavit tukaj notri in ne v oncreate ker jih takrat se nima....
-        closest_distance.setText(String.valueOf(distance_ranking.get(0)[0]) + "m");
+        // Če je razdalja večja od 999, pretvori v km.
+        if (distance_ranking.get(0)[0] > 999) {
+            int dist = distance_ranking.get(0)[0];
+            dist = dist / 1000;
+            closest_distance.setText(String.valueOf(dist + "km"));
+        } else {
+            closest_distance.setText(String.valueOf(distance_ranking.get(0)[0]) + "m");
+        }
         closest_name.setText(parkings.get(distance_ranking.get(0)[1]).getParkingName());
         closest_num_slots.setText(String.valueOf(parkings.get(distance_ranking.get(0)[1]).getNumberOfPlaces())+ " mest");
         closest_image.setImageURI(Uri.parse("android.resource://si.uni_lj.fe.uv0414.parkaway_ljubljana/drawable/"+parkings.get(distance_ranking.get(0)[1]).getPhoto()));
